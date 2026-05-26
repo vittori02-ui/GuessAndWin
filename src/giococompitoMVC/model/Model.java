@@ -97,4 +97,42 @@ public class Model {
         }
         return true;
     }
+    /**
+     * fa un round
+     * @return 
+     * -9 se non siamo in gioco
+     * -8 se i round sono finiti
+     * 
+     */
+    public int gioco()
+    {
+       if(this.inGioco=false) return -9;
+       if(this.round==0) return -8;
+       this.round--;
+       Random r=new Random();
+       this.sceltaPc=r.nextInt(4)+1;
+       if(sceltaPc==1||sceltaPc==3) this.sceltaPc2=false;
+       else this.sceltaPc2=true;
+       this.colorePC=r.nextInt(3);
+       
+       if((this.colorePC!=this.coloreUte)&&(this.sceltaUte!=this.sceltaPc2)) 
+       {
+           return 0;
+       }
+       else if((this.colorePC!=this.coloreUte)&&(this.sceltaUte==this.sceltaPc2))
+       {
+           this.punti+=2;
+           return 2;
+       }
+       else if((this.colorePC==this.coloreUte)&&(this.sceltaUte!=this.sceltaPc2))
+       {
+           this.punti+=5;
+           return 5;
+       }
+       else 
+       {
+           this.punti+=10;
+           return 10;   
+       }
+    }
 }

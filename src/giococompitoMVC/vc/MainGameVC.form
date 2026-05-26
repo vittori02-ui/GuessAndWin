@@ -265,11 +265,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="TERMINA"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="termina_btnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="tentativo_btn">
           <Properties>
             <Property name="text" type="java.lang.String" value="PROVA"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tentativo_btnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>

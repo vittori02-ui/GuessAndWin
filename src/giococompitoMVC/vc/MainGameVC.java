@@ -1,4 +1,6 @@
 package giococompitoMVC.vc;
+import giococompitoMVC.model.Model;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Vittorio Privitera
@@ -6,12 +8,25 @@ package giococompitoMVC.vc;
 public class MainGameVC extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(MainGameVC.class.getName());
-    
+    private Model model;
     /**
      * Creates new form MainGameVC
      */
     public MainGameVC() {
         initComponents();
+        this.model=new Model();
+        abilitaDisabilita(true);
+    }
+    
+    private void abilitaDisabilita(boolean b) //true
+    {
+        rosso_btn.setEnabled(b);
+        verde_btn.setEnabled(b);
+        blu_btn.setEnabled(b);
+        termina_btn.setEnabled(!b);
+        inizia_btn.setEnabled(b);
+        tentativo_btn.setEnabled(!b);
+        pariOdisp_txt.setEditable(b);
     }
     
     /**
@@ -89,8 +104,18 @@ public class MainGameVC extends javax.swing.JFrame {
         inizia_btn.setText("INIZIA");
 
         termina_btn.setText("TERMINA");
+        termina_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                termina_btnActionPerformed(evt);
+            }
+        });
 
         tentativo_btn.setText("PROVA");
+        tentativo_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tentativo_btnActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Scelta del PC");
@@ -214,8 +239,47 @@ public class MainGameVC extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void termina_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_termina_btnActionPerformed
+        terminaPartita();
+    }//GEN-LAST:event_termina_btnActionPerformed
+
+    private void tentativo_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tentativo_btnActionPerformed
+        if(!this.model.isInGioco()) return;
+        int esito=this.model.gioco();
+        switch(esito)
+        {
+            case -9: // non siamo in gioco;
+                JOptionPane.showMessageDialog(null,"Non stai giocando");
+                terminaPartita();
+                break;
+            case -8:
+                JOptionPane.showMessageDialog(null,"Hai finito con "+this.model.getPunti());
+                break;
+            default:
+            punteggio_lbl.setText(""+this.model.getPunti());
+            pariOdisp_txt.setText(""+this.model.isSceltaPc());
+            colorePC_lbl.setText(""+this.model.getColorePC());
+        } 
+    }//GEN-LAST:event_tentativo_btnActionPerformed
     
+    private void terminaPartita()
+    {
+        this.model.terminaPartita();
+        abilitaDisabilita(true);
+    }
+    private String bottone()
+    {
+        if(rosso_btn.isSelected()) return"Rosso";
+        if(verde_btn.isSelected()) return"Verde";
+        if(blu_btn.isSelected()) return"Blu";
+        return "";
+    }
     
+    private void inizia_btnActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        abilitaDisabilita(false);
+        this.model.iniziaPartita(bottone(),pariOdisp_txt.getText(),"10");
+    }  
     
     
     /**
