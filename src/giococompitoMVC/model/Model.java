@@ -1,11 +1,12 @@
 package giococompitoMVC.model;
+import giococompitoMVC.vc.MainGameVC;
 import java.util.Random;
 /**
  *
  * @author Vittorio Privitera
  */
 public class Model {
-     private boolean inGioco;
+    private boolean inGioco;
     private int punti;
     private int round;
     private boolean sceltaUte; //pari=true e dispari false
@@ -95,6 +96,7 @@ public class Model {
         {
             
         }
+        this.inGioco=true;
         return true;
     }
     /**
@@ -134,5 +136,15 @@ public class Model {
            this.punti+=10;
            return 10;   
        }
+    }
+    public static void main(String[] args)
+    {
+        //MainGameVC mg=new MainGameVC();
+        Model model=new Model();
+        System.out.println(model.toString());
+        model.iniziaPartita("0","pari","2");
+        System.out.println(model.toString());
+        System.out.println(model.toString());
+        System.out.println(model.gioco());
     }
 }
