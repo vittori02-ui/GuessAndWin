@@ -51,8 +51,8 @@ public class Model {
         return coloreUte;
     }
 
-    public int isSceltaPc() {
-        return sceltaPc;
+    public String sceltaPc() {
+        return sceltaPc2;
     }
 
     public String getColorePC() {
@@ -71,15 +71,10 @@ public class Model {
         return true;
     }
     
-    public boolean iniziaPartita(String colore, String pariOdisp, String round)
+    public boolean iniziaPartita(String round)
     {
         if(!this.inGioco) return false;
         reset();
-        this.coloreUte=colore;
-        
-        if(pariOdisp.equalsIgnoreCase("pari")) this.sceltaUte="pari";
-        else if(pariOdisp.equalsIgnoreCase("dispari")) this.sceltaUte="dispari";
-        else this.sceltaUte="pari";
         try
         {
             int r=Integer.parseInt(round);
@@ -100,10 +95,14 @@ public class Model {
      * -8 se i round sono finiti
      * 
      */
-    public int gioco()
+    public int gioco(String colore,String pariOdisp)
     {
        if(this.inGioco==false) return -9;
        if(this.round==0) return -8;
+       this.coloreUte=colore;
+       if(pariOdisp.equalsIgnoreCase("pari")) this.sceltaUte="pari";
+       else if(pariOdisp.equalsIgnoreCase("dispari")) this.sceltaUte="dispari";
+       else this.sceltaUte="pari";
        this.round--;
        Random r=new Random();
        this.sceltaPc=r.nextInt(4)+1;
@@ -131,6 +130,7 @@ public class Model {
            return 10;   
        }
     }
+    /*
     public static void main(String[] args)
     {
         //MainGameVC mg=new MainGameVC();
@@ -147,5 +147,5 @@ public class Model {
         System.out.println(model.gioco());
         System.out.println(model.toString());
                 
-    }
+    }*/
 }
