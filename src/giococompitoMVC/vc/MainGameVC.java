@@ -15,18 +15,20 @@ public class MainGameVC extends javax.swing.JFrame {
     public MainGameVC() {
         initComponents();
         this.model=new Model();
-        abilitaDisabilita(true);
+        abilitaDisabilita(false);
     }
-    
-    private void abilitaDisabilita(boolean b) //true
+    private void abilitaDisabilita(boolean b) //false
     {
         rosso_btn.setEnabled(b);
         verde_btn.setEnabled(b);
         blu_btn.setEnabled(b);
-        termina_btn.setEnabled(!b);
-        inizia_btn.setEnabled(b);
-        tentativo_btn.setEnabled(!b);
-        pariOdisp_txt.setEditable(b);
+        termina_btn.setEnabled(b);
+        inizia_btn.setEnabled(!b);
+        tentativo_btn.setEnabled(b);
+        pari.setEnabled(b);
+        dispari.setEnabled(b);
+        sceltaPC_lbl.setText("");
+        punteggio_lbl.setText("0");
     }
     
     /**
@@ -39,11 +41,11 @@ public class MainGameVC extends javax.swing.JFrame {
     private void initComponents() {
 
         colori = new javax.swing.ButtonGroup();
+        pariOdisp = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        pariOdisp_txt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         rosso_btn = new javax.swing.JRadioButton();
         verde_btn = new javax.swing.JRadioButton();
@@ -52,10 +54,11 @@ public class MainGameVC extends javax.swing.JFrame {
         termina_btn = new javax.swing.JButton();
         tentativo_btn = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        pariOdispariPC_lbl = new javax.swing.JLabel();
-        colorePC_lbl = new javax.swing.JLabel();
+        sceltaPC_lbl = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         punteggio_lbl = new javax.swing.JLabel();
+        pari = new javax.swing.JRadioButton();
+        dispari = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,7 +87,7 @@ public class MainGameVC extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(153, 255, 255));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Inserisci pari o dispari");
+        jLabel2.setText("Dimmi se...");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Colore tra:");
@@ -102,6 +105,11 @@ public class MainGameVC extends javax.swing.JFrame {
         blu_btn.setText("Blu");
 
         inizia_btn.setText("INIZIA");
+        inizia_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inizia_btnActionPerformed(evt);
+            }
+        });
 
         termina_btn.setText("TERMINA");
         termina_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -117,14 +125,10 @@ public class MainGameVC extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Scelta del PC");
 
-        pariOdispariPC_lbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        pariOdispariPC_lbl.setText("0");
-
-        colorePC_lbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        colorePC_lbl.setText("0");
+        sceltaPC_lbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Punti utente:");
@@ -132,35 +136,37 @@ public class MainGameVC extends javax.swing.JFrame {
         punteggio_lbl.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         punteggio_lbl.setText("0");
 
+        pariOdisp.add(pari);
+        pari.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        pari.setText("Pari");
+
+        pariOdisp.add(dispari);
+        dispari.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        dispari.setText("Dispari");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
+                .addGap(102, 102, 102)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(tentativo_btn)
-                        .addGap(252, 252, 252))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(punteggio_lbl)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(12, 12, 12)
+                                .addComponent(tentativo_btn))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(pariOdisp_txt, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))))
-                .addComponent(pariOdispariPC_lbl)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                                .addComponent(pari)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dispari))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(punteggio_lbl)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rosso_btn)
                             .addComponent(verde_btn)
@@ -168,9 +174,11 @@ public class MainGameVC extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addGap(78, 78, 78))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(colorePC_lbl)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(157, 157, 157)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(sceltaPC_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(125, 125, 125))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(158, 158, 158)
                 .addComponent(inizia_btn)
@@ -185,36 +193,36 @@ public class MainGameVC extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(inizia_btn)
                     .addComponent(termina_btn))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(punteggio_lbl))
+                        .addGap(31, 31, 31)
+                        .addComponent(tentativo_btn)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(pari)
+                            .addComponent(dispari))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(pariOdisp_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(rosso_btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(verde_btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(blu_btn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                                .addComponent(sceltaPC_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(107, 107, 107)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(punteggio_lbl))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(tentativo_btn)
-                            .addComponent(jLabel4)
-                            .addComponent(pariOdispariPC_lbl)
-                            .addComponent(colorePC_lbl))
-                        .addGap(87, 87, 87))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rosso_btn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(verde_btn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(blu_btn)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel4)))
+                        .addGap(66, 66, 66))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -246,27 +254,43 @@ public class MainGameVC extends javax.swing.JFrame {
 
     private void tentativo_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tentativo_btnActionPerformed
         if(!this.model.isInGioco()) return;
-        int esito=this.model.gioco();
+        if(bottone()=="")
+        {
+            JOptionPane.showMessageDialog(this,"Non hai selezionato nessun colore, attenzione!!!!");
+            return;
+        }
+        int esito=this.model.gioco(bottone(),pariOdispbtn());
         switch(esito)
         {
             case -9: // non siamo in gioco;
                 JOptionPane.showMessageDialog(null,"Non stai giocando");
-                terminaPartita();
+                this.model.terminaPartita();
+                abilitaDisabilita(false);
                 break;
             case -8:
                 JOptionPane.showMessageDialog(null,"Hai finito con "+this.model.getPunti());
+                this.model.terminaPartita();
+                abilitaDisabilita(false);
                 break;
             default:
             punteggio_lbl.setText(""+this.model.getPunti());
-            pariOdisp_txt.setText(""+this.model.isSceltaPc());
-            colorePC_lbl.setText(""+this.model.getColorePC());
+            sceltaPC_lbl.setText(""+this.model.sceltaPc()+" "+this.model.getColorePC());
         } 
     }//GEN-LAST:event_tentativo_btnActionPerformed
+
+    private void inizia_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inizia_btnActionPerformed
+       abilitaDisabilita(true);
+       this.model.iniziaPartita("10");
+    }//GEN-LAST:event_inizia_btnActionPerformed
     
     private void terminaPartita()
     {
-        this.model.terminaPartita();
-        abilitaDisabilita(true);
+        int esito=JOptionPane.showConfirmDialog(rootPane,"Vuoi finire si o no?","Conferma",JOptionPane.YES_OPTION);
+        if(JOptionPane.OK_OPTION==esito)
+        {
+            this.model.terminaPartita();
+            abilitaDisabilita(false);
+        }
     }
     private String bottone()
     {
@@ -274,14 +298,14 @@ public class MainGameVC extends javax.swing.JFrame {
         if(verde_btn.isSelected()) return"Verde";
         if(blu_btn.isSelected()) return"Blu";
         return "";
+    } 
+    
+    private String pariOdispbtn()
+    {
+        if(pari.isSelected())return"Pari";
+        if(dispari.isSelected())return"Dispari";
+        return "";
     }
-    
-    private void inizia_btnActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        abilitaDisabilita(false);
-        this.model.iniziaPartita(bottone(),pariOdisp_txt.getText(),"10");
-    }  
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -309,8 +333,8 @@ public class MainGameVC extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton blu_btn;
-    private javax.swing.JLabel colorePC_lbl;
     private javax.swing.ButtonGroup colori;
+    private javax.swing.JRadioButton dispari;
     private javax.swing.JButton inizia_btn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -319,10 +343,11 @@ public class MainGameVC extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField pariOdisp_txt;
-    private javax.swing.JLabel pariOdispariPC_lbl;
+    private javax.swing.JRadioButton pari;
+    private javax.swing.ButtonGroup pariOdisp;
     private javax.swing.JLabel punteggio_lbl;
     private javax.swing.JRadioButton rosso_btn;
+    private javax.swing.JLabel sceltaPC_lbl;
     private javax.swing.JButton tentativo_btn;
     private javax.swing.JButton termina_btn;
     private javax.swing.JRadioButton verde_btn;
